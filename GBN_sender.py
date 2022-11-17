@@ -106,13 +106,15 @@ while nextseqnum < max_data:
         # -------- Simulated packet loss --------
         random_number = random.randint(0, 99)
         if random_number < seed:
-            data_list = [max_data, nextseqnum, ""]
-            data_to_send = pickle.dumps(data_list)
-            sock.sendto(data_to_send, receiver_addr)
+            # packet isn't actually being "lost" so this code needs to be commented out
+            # data_list = [max_data, nextseqnum, ""]
+            # data_to_send = pickle.dumps(data_list)
+            # sock.sendto(data_to_send, receiver_addr)
             skip = True
 
         # try to send data
-        if nextseqnum < send_base + window_size and skip is False:
+        # if packet is being "lost" then only do this if skip = False
+        if nextseqnum < send_base + window_size:
             data_list = [max_data, nextseqnum, packets[nextseqnum]]
             data_to_send = pickle.dumps(data_list)
             sock.sendto(data_to_send, receiver_addr)
